@@ -1,0 +1,4 @@
+/build
+/.bundle
+/vendor
+*.svg
