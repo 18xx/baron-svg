@@ -5,9 +5,13 @@ class Tile
   OFFSET = SIDE_LENGTH / 72
   CENTER = Point.new(WIDTH / 2, HEIGHT / 2)
 
-  def initialize(color, tile_elements)
-    @tile_elements = tile_elements
+  def initialize(color)
+    @tile_elements = []
     @color = color.to_s
+  end
+
+  def add(element)
+    @tile_elements << element
   end
 
   def hex_points

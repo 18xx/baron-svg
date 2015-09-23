@@ -291,13 +291,14 @@ brown = '#80461B'
       { from: NORTH_EAST, to: CENTER },
     ], city: 60, type: 'R', color: brown, rotations: [1] },
   ].each do |values|
+    tile = Tile.new(values[:color])
+
     if !values[:rotations] || values[:rotations].include?(dir)
-      tile_data = [
-        TileNumber.new(
-          values[:num],
-          dir + 1
-        )
-      ]
+      tile.add TileNumber.new(
+        values[:num],
+        dir + 1
+      )
+
       values[:track].each do |track_values|
         track = if track_values[:to] == CENTER
           TrackToPoint.new(
@@ -309,11 +310,11 @@ brown = '#80461B'
             track_values[:to] - (dir * ROTATION),
           )
         end
-        tile_data << track.data
+        tile.add track.data
 
         if track_values[:halt]
           track.midpoints(track_values[:halt]).each do |midpoint|
-            tile_data << Halt.new(
+            tile.add Halt.new(
               midpoint[:point],
               midpoint[:label_point]
             )
@@ -322,7 +323,7 @@ brown = '#80461B'
 
         if track_values[:town]
           track.midpoints(1).each do |midpoint|
-            tile_data << Town.new(
+            tile.add Town.new(
               midpoint[:point],
               midpoint[:label_point],
               value: track_values[:town]
@@ -331,29 +332,29 @@ brown = '#80461B'
         end
       end
 
-      tile_data << City.new(
+      tile.add City.new(
         centre,
         values[:city],
         values[:spots]
       ) if values[:city]
 
-      tile_data << Halt.new(
+      tile.add Halt.new(
         centre,
         Point.new(centre.x - Tile::OFFSET * 20, centre.y - Tile::OFFSET * 40)
       ) if values[:junction] && values[:junction] == :halt
 
-      tile_data << Town.new(
+      tile.add Town.new(
         centre,
         Point.new(centre.x - Tile::OFFSET * 20, centre.y - Tile::OFFSET * 40),
         value: values[:junction],
         color: values[:color]
       ) if values[:junction] && values[:junction].is_a?(Fixnum)
 
-      tile_data << TileType.new(
+      tile.add TileType.new(
         values[:type]
       ) if values[:type]
 
-      tiles["#{values[:num]}.#{dir + 1}"] = Tile.new(values[:color], tile_data)
+      tiles["#{values[:num]}.#{dir + 1}"] = tile
     end
   end
 end
@@ -373,47 +374,48 @@ end
   type: 'C',
   color: :yellow },
 ].each do |values|
-  tile_data = [
-    TileNumber.new(
-      values[:num],
-      0
-    )
-  ]
+  tile = Tile.new(values[:color])
+
+  tile.add TileNumber.new(
+    values[:num],
+    0
+  )
+
   values[:track].each do |track_values|
     track = TrackToPoint.new(
       track_values[:from],
       track_values[:to]
     )
-    tile_data << track.data
+    tile.add track.data
   end
 
   values[:special].each do |special_values|
     loc = special_values[:loc]
     case special_values[:type]
     when :city
-      tile_data << City.new(
+      tile.add City.new(
         loc,
         special_values[:value]
       )
     when :town
-      tile_data << Town.new(
+      tile.add Town.new(
         loc,
         Point.new(loc.x - (Tile::OFFSET * 20), loc.y),
         value: special_values[:value]
       )
     when :halt
-      tile_data << Halt.new(
+      tile.add Halt.new(
         loc,
         Point.new(loc.x - (Tile::OFFSET * 20), loc.y)
       )
     end
   end
 
-  tile_data << TileType.new(
+  tile.add TileType.new(
     values[:type]
   ) if values[:type]
 
-  tiles["#{values[:num]}.0"] = Tile.new(values[:color], tile_data)
+  tiles["#{values[:num]}.0"] = Tile.new(values[:color])
 end
 
 tiles.each do |key,val|
