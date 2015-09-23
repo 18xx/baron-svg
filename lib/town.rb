@@ -1,8 +1,9 @@
 class Town
-  def initialize(point, label_point, value: nil)
+  def initialize(point, label_point, value: nil, color: color)
     @point = point
     @label_point = label_point
     @value = value
+    @color = color
   end
 
   def color
@@ -14,12 +15,20 @@ class Town
   end
 
   def to_s
-    %{
+    result = %{
       <circle
         cx="#{@point.x}"
         cy="#{@point.y}"
-        r="#{Tile::OFFSET * 8}"
+        r="#{Tile::OFFSET * 10}"
         fill="#{color}"
+    }
+    if @color
+      result += %{
+        stroke="#{@color}"
+        stroke-width="#{Tile::OFFSET * 2}"
+      }
+    end
+    result += %{
       />
       <text
         x="#{@label_point.x}"
