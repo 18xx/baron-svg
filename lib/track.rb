@@ -2,6 +2,9 @@ class Track
   def initialize(rad1, rad2)
     @rad1 = rad1
     @rad2 = rad2
+    if rad2 > rad1 && rad2 - rad1 > Math::PI
+      @rad1 += Math::PI * 2
+    end
   end
 
   def data
