@@ -310,7 +310,7 @@ brown = '#80461B'
             track_values[:to] - (dir * ROTATION),
           )
         end
-        tile.add track.data
+        tile.add track
 
         if track_values[:halt]
           track.midpoints(track_values[:halt]).each do |midpoint|
@@ -333,6 +333,7 @@ brown = '#80461B'
       end
 
       tile.add City.new(
+        tile,
         centre,
         values[:city],
         values[:spots]
@@ -386,7 +387,7 @@ end
       track_values[:from],
       track_values[:to]
     )
-    tile.add track.data
+    tile.add track
   end
 
   values[:special].each do |special_values|
@@ -394,6 +395,7 @@ end
     case special_values[:type]
     when :city
       tile.add City.new(
+        tile,
         loc,
         special_values[:value]
       )

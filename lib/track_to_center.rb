@@ -1,4 +1,6 @@
 class TrackToPoint
+  attr_reader :rad
+
   def initialize(rad, point = Tile::CENTER)
     @rad = rad
     @point = point
@@ -19,11 +21,11 @@ class TrackToPoint
     ]
   end
 
-  def data
+  def to_s
     Line.new(
       radian_point,
       @point
-    )
+    ).to_s
   end
 
   def radian_point

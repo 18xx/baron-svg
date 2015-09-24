@@ -1,4 +1,6 @@
 class TileNumber
+  attr_reader :number, :orientation
+
   def initialize(number, orientation)
     @number = number
     @orientation = orientation

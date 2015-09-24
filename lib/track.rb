@@ -7,16 +7,16 @@ class Track
     end
   end
 
-  def data
+  def to_s
     if straight?
-      Line.new(*track_points)
+      Line.new(*track_points).to_s
     else
       Curve.new(
         track_points.first,
         track_points.last,
         track_curve_radius,
         (@rad1 > @rad2 ? 1 : 0)
-      )
+      ).to_s
     end
   end
 

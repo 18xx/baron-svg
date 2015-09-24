@@ -5,6 +5,8 @@ class Tile
   OFFSET = SIDE_LENGTH / 72
   CENTER = Point.new(WIDTH / 2, HEIGHT / 2)
 
+  attr_reader :tile_elements
+
   def initialize(color)
     @tile_elements = []
     @color = color.to_s
