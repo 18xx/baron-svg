@@ -66,17 +66,14 @@ class City
 
   def label_position
     return @label_position if @label_position
-    number = @tile.tile_elements.find { |te| te.is_a? TileNumber }
+
     if @tile.tile_elements.any? { |e| e.is_a? TrackToPoint } && @spots == 1
       track_locations = @tile.tile_elements.select { |e| e.is_a? TrackToPoint }.map { |t| (t.rad / Math::PI * 6).round % 12}.sort
       track_locations.push(track_locations.first + 12)
       max_index = track_locations.each_cons(2).map { |a,b| b - a }.each_with_index.max[1]
       radians = ((track_locations[max_index + 1] + track_locations[max_index]) / 2) % 12 * Math::PI / 6
       radius = Tile::OFFSET * 50
-      if number.number.to_s == '5' && number.orientation == 2
-        require 'pry'
-        binding.pry
-      end
+
       @label_position = Point.new(
         Tile::CENTER.x + Math.cos(radians) * radius,
         Tile::CENTER.y - Math.sin(radians) * radius

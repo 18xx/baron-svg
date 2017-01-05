@@ -66,7 +66,7 @@ brown = '#80461B'
     ], city: 30, color: :green},
     { num: 16, track: [
       { from: NORTH, to: SOUTH_EAST },
-      { from: SOUTH, to: NORTH_WEST },
+      { from: NORTH_EAST, to: SOUTH },
     ], color: :green },
     { num: 17, track: [
       { from: NORTH, to: SOUTH_EAST },

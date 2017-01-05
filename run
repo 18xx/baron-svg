@@ -1,2 +1,2 @@
 #!/bin/sh
-bundle exec ruby hexagon_svg.rb
+bundle exec ruby 1860.rb
