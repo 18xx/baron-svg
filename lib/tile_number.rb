@@ -9,8 +9,8 @@ class TileNumber
   def to_s
     %{
       <text
-        x="#{(Tile::WIDTH * 3 / 4) - Tile::OFFSET * 2}"
-        y="#{Tile::HEIGHT - Tile::OFFSET}"
+        x="#{Tile::WIDTH - Tile::OFFSET}"
+        y="#{(Tile::HEIGHT * 3 / 4) - Tile::OFFSET * 2}"
         text-anchor="end"
         fill="black"
         font-size="#{Tile::SIDE_LENGTH / 8}"

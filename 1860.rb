@@ -4,293 +4,292 @@ centre = Point.new(Tile::WIDTH / 2, Tile::HEIGHT / 2)
 
 tiles = {}
 
-NORTH_EAST = Math::PI * 1 / 6
-NORTH      = Math::PI * 3 / 6
-NORTH_WEST = Math::PI * 5 / 6
-SOUTH_WEST = Math::PI * 7 / 6
-SOUTH      = Math::PI * 9 / 6
-SOUTH_EAST = Math::PI * 11 / 6
+NORTH_EAST = 0
+NORTH      = Math::PI * 1 / 3
+NORTH_WEST = Math::PI * 2 / 3
+SOUTH_WEST = Math::PI
+SOUTH      = Math::PI * 4 / 3
+SOUTH_EAST = Math::PI * 5 / 3
 CENTER     = :center
 
 ROTATION = Math::PI / 3
 
 brown = '#80461B'
 
-(0...6).each do |dir|
-
-  [
-    { num: 'R', track: [
-      { from: SOUTH_EAST, to: CENTER },
-    ], city: 30, rotations: [0], type: 'R', color: :yellow },
-    { num: 'N', track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_WEST, to: CENTER },
-    ], city: 30, rotations: [0], type: 'N', color: :yellow },
-    { num: 'M', track: [
-      { from: SOUTH_EAST, to: CENTER },
-    ], city: 10, rotations: [0], type: 'M', color: :yellow },
-    { num: 'V', track: [
-      { from: NORTH_WEST, to: CENTER },
-    ], city: 30, rotations: [0], type: 'V', color: :yellow },
-    { num: 5, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER }
-    ], city: 20, color: :yellow },
-    { num: 6, track: [
-      { from: NORTH, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER }
-    ], city: 20, color: :yellow },
-    { num: 57, track: [
-      { from: NORTH, to: CENTER },
-      { from: SOUTH, to: CENTER }
-    ], city: 20, rotations: (0..2), color: :yellow },
-    { num: 115, track: [
-      { from: NORTH, to: CENTER }
-    ], city: 20, color: :yellow },
-    { num: 746, track: [
-      { from: NORTH, to: CENTER },
-      { from: SOUTH, to: CENTER }
-    ], city: 10, rotations: (0..2), type: 'B', color: :yellow },
-    { num: 7, track: [{ from: NORTH, to: NORTH_EAST }], color: :yellow },
-    { num: 8, track: [{ from: NORTH, to: SOUTH_EAST }], color: :yellow },
-    { num: 9, track: [{ from: NORTH, to: SOUTH }], rotations: (0..2), color: :yellow },
-    { num: 741, track: [{ from: NORTH, to: NORTH_EAST, halt: 1 }], color: :yellow },
-    { num: 742, track: [{ from: NORTH, to: SOUTH_EAST, halt: 1 }], color: :yellow },
-    { num: 743, track: [{ from: NORTH, to: SOUTH, halt: 1 }], rotations: (0..2), color: :yellow },
-    { num: 744, track: [{ from: NORTH, to: SOUTH, halt: 2 }], rotations: (0..2), color: :yellow },
-    { num: 745, track: [{ from: NORTH, to: SOUTH_EAST, halt: 2 }], color: :yellow },
-    { num: 12, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-    ], city: 30, color: :green},
-    { num: 16, track: [
-      { from: NORTH, to: SOUTH_EAST },
-      { from: NORTH_EAST, to: SOUTH },
-    ], color: :green },
-    { num: 17, track: [
-      { from: NORTH, to: SOUTH_EAST },
-      { from: SOUTH, to: NORTH_WEST },
-    ], color: :green },
-    { num: 18, track: [
-      { from: NORTH, to: SOUTH },
-      { from: NORTH_EAST, to: SOUTH_EAST },
-    ], color: :green },
-    { num: 19, track: [
-      { from: NORTH, to: SOUTH_EAST },
-      { from: SOUTH_WEST, to: NORTH_WEST },
-    ], color: :green },
-    { num: 20, track: [
-      { from: NORTH, to: SOUTH },
-      { from: NORTH_WEST, to: SOUTH_EAST },
-    ], rotations: (0..2), color: :green },
-    { num: 21, track: [
-      { from: NORTH, to: SOUTH_EAST },
-      { from: SOUTH_WEST, to: SOUTH },
-    ], color: :green },
-    { num: 22, track: [
-      { from: NORTH, to: SOUTH_EAST },
-      { from: NORTH_WEST, to: SOUTH_WEST },
-    ], color: :green },
-    { num: 205, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-    ], city: 30, color: :green },
-    { num: 206, track: [
-      { from: NORTH, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-    ], city: 30, color: :green },
-    { num: 625, track: [
-      { from: NORTH, to: NORTH_EAST },
-      { from: SOUTH, to: SOUTH_EAST },
-    ], color: :green },
-    { num: 626, track: [
-      { from: NORTH, to: NORTH_EAST },
-      { from: SOUTH_WEST, to: SOUTH },
-    ], color: :green },
-    { num: 747, track: [
-      { from: NORTH, to: NORTH_EAST, town: 10 },
-    ], color: :green },
-    { num: 748, track: [
-      { from: NORTH, to: SOUTH_EAST, town: 10 },
-    ], color: :green },
-    { num: 749, track: [
-      { from: NORTH, to: SOUTH, town: 10 },
-    ], color: :green },
-    { num: 750, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-    ], junction: :halt, color: :green },
-    { num: 751, track: [
-      { from: NORTH, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-    ], junction: :halt, color: :green },
-    { num: 752, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-    ], junction: :halt, color: :green },
-    { num: 753, track: [
-      { from: NORTH, to: CENTER },
-      { from: SOUTH_WEST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-    ], junction: :halt, color: :green },
-    { num: 754, track: [
-      { from: NORTH, to: CENTER, halt: 1 },
-      { from: SOUTH, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-    ], junction: 10, color: :green },
-    { num: 755, track: [
-      { from: NORTH, to: CENTER, halt: 1 },
-      { from: SOUTH, to: CENTER },
-      { from: SOUTH_WEST, to: CENTER },
-    ], junction: 10, color: :green },
-    { num: 756, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-    ], city: 30, color: :green },
-    { num: 757, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_WEST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-    ], city: 20, type: 'B', color: :green, rotations: (0..2) },
-    { num: 758, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-    ], city: 50, type: 'R', color: :green, rotations: [1] },
-    { num: 759, track: [
-      { from: NORTH, to: CENTER },
-    ], city: 30, color: :green },
-    { num: 761, track: [
-      { from: NORTH, to: CENTER, halt: 1 },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-    ], city: 20, type: 'M', rotations: [0], color: :green },
-    { num: 761, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-    ], city: 20, type: 'B', color: :green },
-    { num: 764, track: [
-      { from: NORTH, to: NORTH_EAST, town: 20 },
-    ], color: brown },
-    { num: 765, track: [
-      { from: NORTH, to: SOUTH, town: 20 },
-    ], color: brown },
-    { num: 766, track: [
-      { from: NORTH, to: SOUTH_EAST, town: 20 },
-    ], color: brown },
-    { num: 767, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-    ], junction: 10, color: brown },
-    { num: 768, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_WEST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-    ], junction: 10, color: brown },
-    { num: 769, track: [
-      { from: NORTH, to: CENTER },
-      { from: SOUTH_WEST, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-    ], junction: 10, color: brown },
-    { num: 770, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_WEST, to: CENTER },
-      { from: SOUTH_WEST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-    ], city: 30, spots: 2, color: brown, type: 'B' },
-    { num: 771, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-    ], city: 50, color: brown },
-    { num: 772, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-    ], city: 40, color: brown },
-    { num: 775, track: [
-      { from: NORTH, to: CENTER, halt: 1 },
-      { from: NORTH_WEST, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH_WEST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-    ], city: 20, spots: 2, color: brown, type: 'M' },
-    { num: 776, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-    ], city: 40, spots: 2, color: brown },
-    { num: 777, track: [
-      { from: NORTH, to: CENTER },
-    ], city: 60, color: brown },
-    { num: 778, track: [
-      { from: NORTH, to: SOUTH_EAST },
-      { from: NORTH_WEST, to: SOUTH },
-      { from: SOUTH_WEST, to: NORTH_EAST },
-    ], color: brown },
-    { num: 779, track: [
-      { from: NORTH, to: SOUTH_EAST },
-      { from: NORTH_EAST, to: SOUTH },
-      { from: NORTH_WEST, to: SOUTH_WEST },
-    ], color: brown },
-    { num: 780, track: [
-      { from: NORTH, to: SOUTH },
-      { from: NORTH_EAST, to: SOUTH_EAST },
-      { from: NORTH_WEST, to: SOUTH_WEST },
-    ], color: brown },
-    { num: 781, track: [
-      { from: NORTH, to: NORTH_EAST },
-      { from: SOUTH, to: SOUTH_EAST },
-      { from: NORTH_WEST, to: SOUTH_WEST },
-    ], color: brown },
-    { num: 782, track: [
-      { from: NORTH, to: CENTER, halt: 1 },
-      { from: NORTH_WEST, to: CENTER },
-      { from: SOUTH_WEST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-    ], junction: 20, color: brown },
-    { num: 783, track: [
-      { from: NORTH, to: CENTER, halt: 1 },
-      { from: NORTH_WEST, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-    ], junction: 20, color: brown },
-    { num: 784, track: [
-      { from: NORTH, to: CENTER, halt: 1 },
-      { from: NORTH_WEST, to: CENTER },
-      { from: SOUTH_WEST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-    ], junction: 20, color: brown },
-    { num: 785, track: [
-      { from: NORTH, to: CENTER, halt: 1 },
-      { from: NORTH_EAST, to: CENTER },
-      { from: SOUTH_WEST, to: CENTER },
-      { from: SOUTH, to: CENTER },
-      { from: SOUTH_EAST, to: CENTER },
-    ], junction: 20, color: brown },
-    { num: 786, track: [
-      { from: NORTH, to: CENTER },
-      { from: NORTH_EAST, to: CENTER },
-    ], city: 60, type: 'R', color: brown, rotations: [1] },
-  ].each do |values|
+[
+  { num: 57, track: [
+    { from: NORTH, to: CENTER },
+    { from: SOUTH, to: CENTER }
+  ], city: 20, rotations: (0..2), color: :yellow },
+  { num: 'R', track: [
+    { from: SOUTH_EAST, to: CENTER },
+  ], city: 30, rotations: [0], type: 'R', color: :yellow },
+  { num: 'N', track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_WEST, to: CENTER },
+  ], city: 30, rotations: [0], type: 'N', color: :yellow },
+  { num: 'M', track: [
+    { from: SOUTH_EAST, to: CENTER },
+  ], city: 10, rotations: [0], type: 'M', color: :yellow },
+  { num: 'V', track: [
+    { from: NORTH_WEST, to: CENTER },
+  ], city: 30, rotations: [0], type: 'V', color: :yellow },
+  { num: 5, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER }
+  ], city: 20, color: :yellow },
+  { num: 6, track: [
+    { from: NORTH, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER }
+  ], city: 20, color: :yellow },
+  { num: 115, track: [
+    { from: NORTH, to: CENTER }
+  ], city: 20, color: :yellow },
+  { num: 746, track: [
+    { from: NORTH, to: CENTER },
+    { from: SOUTH, to: CENTER }
+  ], city: 10, rotations: (0..2), type: 'B', color: :yellow },
+  { num: 7, track: [{ from: NORTH, to: NORTH_EAST }], color: :yellow },
+  { num: 8, track: [{ from: NORTH, to: SOUTH_EAST }], color: :yellow },
+  { num: 9, track: [{ from: NORTH, to: SOUTH }], rotations: (0..2), color: :yellow },
+  { num: 741, track: [{ from: NORTH, to: NORTH_EAST, halt: 1 }], color: :yellow },
+  { num: 742, track: [{ from: NORTH, to: SOUTH_EAST, halt: 1 }], color: :yellow },
+  { num: 743, track: [{ from: NORTH, to: SOUTH, halt: 1 }], rotations: (0..2), color: :yellow },
+  { num: 744, track: [{ from: NORTH, to: SOUTH, halt: 2 }], rotations: (0..2), color: :yellow },
+  { num: 745, track: [{ from: NORTH, to: SOUTH_EAST, halt: 2 }], color: :yellow },
+  { num: 12, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+  ], city: 30, color: :green},
+  { num: 16, track: [
+    { from: NORTH, to: SOUTH_EAST },
+    { from: NORTH_EAST, to: SOUTH },
+  ], color: :green },
+  { num: 17, track: [
+    { from: NORTH, to: SOUTH_EAST },
+    { from: SOUTH, to: NORTH_WEST },
+  ], color: :green },
+  { num: 18, track: [
+    { from: NORTH, to: SOUTH },
+    { from: NORTH_EAST, to: SOUTH_EAST },
+  ], color: :green },
+  { num: 19, track: [
+    { from: NORTH, to: SOUTH_EAST },
+    { from: SOUTH_WEST, to: NORTH_WEST },
+  ], color: :green },
+  { num: 20, track: [
+    { from: NORTH, to: SOUTH },
+    { from: NORTH_WEST, to: SOUTH_EAST },
+  ], rotations: (0..2), color: :green },
+  { num: 21, track: [
+    { from: NORTH, to: SOUTH_EAST },
+    { from: SOUTH_WEST, to: SOUTH },
+  ], color: :green },
+  { num: 22, track: [
+    { from: NORTH, to: SOUTH_EAST },
+    { from: NORTH_WEST, to: SOUTH_WEST },
+  ], color: :green },
+  { num: 205, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+  ], city: 30, color: :green },
+  { num: 206, track: [
+    { from: NORTH, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+  ], city: 30, color: :green },
+  { num: 625, track: [
+    { from: NORTH, to: NORTH_EAST },
+    { from: SOUTH, to: SOUTH_EAST },
+  ], color: :green },
+  { num: 626, track: [
+    { from: NORTH, to: NORTH_EAST },
+    { from: SOUTH_WEST, to: SOUTH },
+  ], color: :green },
+  { num: 747, track: [
+    { from: NORTH, to: NORTH_EAST, town: 10 },
+  ], color: :green },
+  { num: 748, track: [
+    { from: NORTH, to: SOUTH_EAST, town: 10 },
+  ], color: :green },
+  { num: 749, track: [
+    { from: NORTH, to: SOUTH, town: 10 },
+  ], color: :green },
+  { num: 750, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+  ], junction: :halt, color: :green },
+  { num: 751, track: [
+    { from: NORTH, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+  ], junction: :halt, color: :green },
+  { num: 752, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+  ], junction: :halt, color: :green },
+  { num: 753, track: [
+    { from: NORTH, to: CENTER },
+    { from: SOUTH_WEST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+  ], junction: :halt, color: :green },
+  { num: 754, track: [
+    { from: NORTH, to: CENTER, halt: 1 },
+    { from: SOUTH, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+  ], junction: 10, color: :green },
+  { num: 755, track: [
+    { from: NORTH, to: CENTER, halt: 1 },
+    { from: SOUTH, to: CENTER },
+    { from: SOUTH_WEST, to: CENTER },
+  ], junction: 10, color: :green },
+  { num: 756, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+  ], city: 30, color: :green },
+  { num: 757, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_WEST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+  ], city: 20, type: 'B', color: :green, rotations: (0..2) },
+  { num: 758, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+  ], city: 50, type: 'R', color: :green, rotations: [1] },
+  { num: 759, track: [
+    { from: NORTH, to: CENTER },
+  ], city: 30, color: :green },
+  { num: 761, track: [
+    { from: NORTH, to: CENTER, halt: 1 },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+  ], city: 20, type: 'M', rotations: [0], color: :green },
+  { num: 761, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+  ], city: 20, type: 'B', color: :green },
+  { num: 764, track: [
+    { from: NORTH, to: NORTH_EAST, town: 20 },
+  ], color: brown },
+  { num: 765, track: [
+    { from: NORTH, to: SOUTH, town: 20 },
+  ], color: brown },
+  { num: 766, track: [
+    { from: NORTH, to: SOUTH_EAST, town: 20 },
+  ], color: brown },
+  { num: 767, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+  ], junction: 10, color: brown },
+  { num: 768, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_WEST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+  ], junction: 10, color: brown },
+  { num: 769, track: [
+    { from: NORTH, to: CENTER },
+    { from: SOUTH_WEST, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+  ], junction: 10, color: brown },
+  { num: 770, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_WEST, to: CENTER },
+    { from: SOUTH_WEST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+  ], city: 30, spots: 2, color: brown, type: 'B' },
+  { num: 771, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+  ], city: 50, color: brown },
+  { num: 772, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+  ], city: 40, color: brown },
+  { num: 775, track: [
+    { from: NORTH, to: CENTER, halt: 1 },
+    { from: NORTH_WEST, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH_WEST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+  ], city: 20, spots: 2, color: brown, type: 'M' },
+  { num: 776, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+  ], city: 40, spots: 2, color: brown },
+  { num: 777, track: [
+    { from: NORTH, to: CENTER },
+  ], city: 60, color: brown },
+  { num: 778, track: [
+    { from: NORTH, to: SOUTH_EAST },
+    { from: NORTH_WEST, to: SOUTH },
+    { from: SOUTH_WEST, to: NORTH_EAST },
+  ], color: brown },
+  { num: 779, track: [
+    { from: NORTH, to: SOUTH_EAST },
+    { from: NORTH_EAST, to: SOUTH },
+    { from: NORTH_WEST, to: SOUTH_WEST },
+  ], color: brown },
+  { num: 780, track: [
+    { from: NORTH, to: SOUTH },
+    { from: NORTH_EAST, to: SOUTH_EAST },
+    { from: NORTH_WEST, to: SOUTH_WEST },
+  ], color: brown },
+  { num: 781, track: [
+    { from: NORTH, to: NORTH_EAST },
+    { from: SOUTH, to: SOUTH_EAST },
+    { from: NORTH_WEST, to: SOUTH_WEST },
+  ], color: brown },
+  { num: 782, track: [
+    { from: NORTH, to: CENTER, halt: 1 },
+    { from: NORTH_WEST, to: CENTER },
+    { from: SOUTH_WEST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+  ], junction: 20, color: brown },
+  { num: 783, track: [
+    { from: NORTH, to: CENTER, halt: 1 },
+    { from: NORTH_WEST, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+  ], junction: 20, color: brown },
+  { num: 784, track: [
+    { from: NORTH, to: CENTER, halt: 1 },
+    { from: NORTH_WEST, to: CENTER },
+    { from: SOUTH_WEST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+  ], junction: 20, color: brown },
+  { num: 785, track: [
+    { from: NORTH, to: CENTER, halt: 1 },
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH_WEST, to: CENTER },
+    { from: SOUTH, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER },
+  ], junction: 20, color: brown },
+  { num: 786, track: [
+    { from: NORTH, to: CENTER },
+    { from: NORTH_EAST, to: CENTER },
+  ], city: 60, type: 'R', color: brown, rotations: [1] },
+].each do |values|
+  (0...6).each do |dir|
     tile = Tile.new(values[:color])
 
     if !values[:rotations] || values[:rotations].include?(dir)

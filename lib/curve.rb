@@ -16,7 +16,7 @@ class Curve
         d="M#{@point1.x} #{@point1.y} A #{@radius} #{@radius} 0 0,#{@direction} #{@point2.x} #{@point2.y}"
         fill="none"
         stroke="#000"
-        stroke-width="#{Tile::OFFSET * 10}"
+        stroke-width="#{Tile::OFFSET * 7}"
       />
     }
   end

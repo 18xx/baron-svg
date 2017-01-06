@@ -7,7 +7,7 @@ class City
   end
 
   def offset
-    Tile::OFFSET * 24
+    Tile::OFFSET * 16
   end
 
   def offset_x
@@ -47,17 +47,17 @@ class City
       <circle
         cx="#{label_position.x}"
         cy="#{label_position.y}"
-        r="#{Tile::OFFSET * 12}"
+        r="#{Tile::OFFSET * 9}"
         fill="none"
         stroke="#000"
         stroke-width="#{Tile::OFFSET * 2}"
       />
       <text
         x="#{label_position.x}"
-        y="#{label_position.y + Tile::OFFSET * 6}"
+        y="#{label_position.y + Tile::OFFSET * 4}"
         text-anchor="middle"
         fill="black"
-        font-size="#{Tile::OFFSET * 16}"
+        font-size="#{Tile::OFFSET * 12}"
       >#{@value}</text>
     }
   end
@@ -72,7 +72,7 @@ class City
       track_locations.push(track_locations.first + 12)
       max_index = track_locations.each_cons(2).map { |a,b| b - a }.each_with_index.max[1]
       radians = ((track_locations[max_index + 1] + track_locations[max_index]) / 2) % 12 * Math::PI / 6
-      radius = Tile::OFFSET * 50
+      radius = Tile::OFFSET * 36
 
       @label_position = Point.new(
         Tile::CENTER.x + Math.cos(radians) * radius,
@@ -80,18 +80,18 @@ class City
       )
     else
       @label_position = Point.new(
-        @center.x + offset_x,
+        @center.x,
         @center.y + offset_y
       )
     end
   end
 
   def city_radius
-    Tile::OFFSET * 24
+    Tile::OFFSET * 20
   end
 
   def city_stroke_width
-    Tile::OFFSET * 3
+    Tile::OFFSET * 2
   end
 
   def city_circle(point)

@@ -36,6 +36,6 @@ class TrackToPoint
   end
 
   def radius
-    Tile::HEIGHT / 2
+    Tile::WIDTH / 2
   end
 end

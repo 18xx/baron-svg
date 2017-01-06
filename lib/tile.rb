@@ -1,8 +1,8 @@
 class Tile
-  SIDE_LENGTH = 88
-  WIDTH = 2 * SIDE_LENGTH
-  HEIGHT = (SIDE_LENGTH * Math.sqrt(3)).round
-  OFFSET = SIDE_LENGTH / 72
+  SIDE_LENGTH = 64
+  HEIGHT = 2 * SIDE_LENGTH
+  WIDTH = (SIDE_LENGTH * Math.sqrt(3)).round
+  OFFSET = SIDE_LENGTH / 64
   CENTER = Point.new(WIDTH / 2, HEIGHT / 2)
 
   attr_reader :tile_elements
@@ -18,12 +18,12 @@ class Tile
 
   def hex_points
     [
-      Point.new(SIDE_LENGTH / 2, 0),
-      Point.new(SIDE_LENGTH * 3 / 2, 0),
-      Point.new(WIDTH,  HEIGHT / 2),
-      Point.new(SIDE_LENGTH * 3 / 2, HEIGHT),
-      Point.new(SIDE_LENGTH / 2, HEIGHT),
-      Point.new(0, HEIGHT / 2)
+      Point.new(WIDTH / 2,  0),
+      Point.new(WIDTH, SIDE_LENGTH / 2),
+      Point.new(WIDTH, SIDE_LENGTH * 3 / 2),
+      Point.new(WIDTH / 2,  HEIGHT),
+      Point.new(0, SIDE_LENGTH * 3 / 2),
+      Point.new(0, SIDE_LENGTH / 2),
     ]
   end
 

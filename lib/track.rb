@@ -53,9 +53,9 @@ class Track
 
   def center_radius
     if shallow_curve?
-      Tile::HEIGHT
+      Tile::WIDTH
     elsif tight_curve?
-      Tile::WIDTH / 2
+      Tile::HEIGHT / 2
     elsif straight?
       0
     else
@@ -65,9 +65,9 @@ class Track
 
   def tile_radius
     if shallow_curve? || straight?
-      Tile::HEIGHT / 2
-    elsif tight_curve?
       Tile::WIDTH / 2
+    elsif tight_curve?
+      Tile::HEIGHT / 2
     else
       fail "Unknown radius"
     end
@@ -79,7 +79,7 @@ class Track
     elsif tight_curve?
       Tile::SIDE_LENGTH / 2
     elsif straight?
-      Tile::HEIGHT / 2
+      Tile::WIDTH / 2
     else
       fail "Unknown radius"
     end

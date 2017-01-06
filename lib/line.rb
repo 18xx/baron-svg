@@ -11,7 +11,7 @@ class Line < Curve
         x2="#{@point2.x}"
         y2="#{@point2.y}"
         stroke="#000"
-        stroke-width="#{Tile::OFFSET * 10}"
+        stroke-width="#{Tile::OFFSET * 7}"
       />
     }
   end
