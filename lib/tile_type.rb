@@ -6,11 +6,11 @@ class TileType
   def to_s
     %{
       <text
-        x="#{Tile::OFFSET * 2}"
-        y="#{(Tile::HEIGHT * 3 / 4) - Tile::OFFSET * 2}"
-        text-anchor="start"
+        x="#{Tile::WIDTH / 2}"
+        y="#{Tile::HEIGHT - Tile::OFFSET * 10}"
+        text-anchor="middle"
         fill="black"
-        font-size="#{Tile::SIDE_LENGTH / 3}"
+        font-size="#{Tile::SIDE_LENGTH / 4}"
         font-weight="bold"
       >#{@name}</text>
     }

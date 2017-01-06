@@ -1,9 +1,12 @@
 class City
-  def initialize(tile, center, value, spots = nil)
+  def initialize(tile, value, spots = nil)
     @tile = tile
-    @center = center
     @value = value
     @spots = spots || 1
+  end
+
+  def center
+    Point.new(Tile::WIDTH / 2, Tile::HEIGHT / 2)
   end
 
   def offset
@@ -22,7 +25,7 @@ class City
     if off_tile?
       offset
     else
-      2 * -offset
+      3 * -offset
     end
   end
 
@@ -30,17 +33,50 @@ class City
     result = if @spots == 2
       %{
         <rect
-          x="#{@center.x - city_radius}"
-          y="#{@center.y - city_radius - city_stroke_width / 2}"
+          x="#{center.x - city_radius}"
+          y="#{center.y - city_radius - city_stroke_width / 2}"
           width="#{city_radius * 2}"
           height="#{city_radius * 2 + city_stroke_width}"
           fill="black"
         />
       } +
-      city_circle(Point.new(@center.x - city_radius, @center.y)) +
-      city_circle(Point.new(@center.x + city_radius, @center.y))
+      city_circle(Point.new(center.x - city_radius, center.y)) +
+      city_circle(Point.new(center.x + city_radius, center.y))
+    elsif @spots == 3
+      hex_points = [
+        Point.new(center.x - city_radius, center.y - 2 * city_radius),
+        Point.new(center.x - 2 * city_radius, center.y - city_radius),
+        Point.new(center.x - 2 * city_radius, center.y + city_radius),
+        Point.new(center.x - city_radius, center.y + 2 * city_radius),
+        Point.new(center.x + city_radius, center.y + city_radius),
+        Point.new(center.x + city_radius, center.y - city_radius),
+      ]
+      %{
+        <polygon points="#{hex_points.map(&:to_s).join ' '}" fill="#{@color}"/>
+      } +
+      city_circle(Point.new(center.x - city_radius, center.y + city_radius)) +
+      city_circle(Point.new(center.x - city_radius, center.y - city_radius)) +
+      city_circle(Point.new(center.x + city_radius, center.y))
+    elsif @spots == 4
+      hex_points = [
+        Point.new(center.x - city_radius, center.y - 2 * city_radius),
+        Point.new(center.x - 2 * city_radius, center.y - city_radius),
+        Point.new(center.x - 2 * city_radius, center.y + city_radius),
+        Point.new(center.x - city_radius, center.y + 2 * city_radius),
+        Point.new(center.x + city_radius, center.y + 2 * city_radius),
+        Point.new(center.x + 2 * city_radius, center.y + city_radius),
+        Point.new(center.x + 2 * city_radius, center.y - city_radius),
+        Point.new(center.x + city_radius, center.y - 2 * city_radius),
+      ]
+      %{
+        <polygon points="#{hex_points.map(&:to_s).join ' '}" fill="#{@color}"/>
+      } +
+      city_circle(Point.new(center.x + city_radius, center.y - city_radius)) +
+      city_circle(Point.new(center.x - city_radius, center.y - city_radius)) +
+      city_circle(Point.new(center.x + city_radius, center.y + city_radius)) +
+      city_circle(Point.new(center.x - city_radius, center.y + city_radius))
     else
-      city_circle(@center)
+      city_circle(center)
     end
 
     result + %{
@@ -48,7 +84,7 @@ class City
         cx="#{label_position.x}"
         cy="#{label_position.y}"
         r="#{Tile::OFFSET * 9}"
-        fill="none"
+        fill="white"
         stroke="#000"
         stroke-width="#{Tile::OFFSET * 2}"
       />
@@ -57,7 +93,7 @@ class City
         y="#{label_position.y + Tile::OFFSET * 4}"
         text-anchor="middle"
         fill="black"
-        font-size="#{Tile::OFFSET * 12}"
+        font-size="#{Tile::OFFSET * 11}"
       >#{@value}</text>
     }
   end
@@ -80,8 +116,8 @@ class City
       )
     else
       @label_position = Point.new(
-        @center.x,
-        @center.y + offset_y
+        center.x,
+        center.y + offset_y
       )
     end
   end
@@ -108,6 +144,6 @@ class City
   end
 
   def off_tile?
-    (@center.y + 2 * -offset) < 0
+    (center.y + 2 * -offset) < 0
   end
 end

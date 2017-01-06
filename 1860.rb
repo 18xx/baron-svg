@@ -4,16 +4,6 @@ centre = Point.new(Tile::WIDTH / 2, Tile::HEIGHT / 2)
 
 tiles = {}
 
-NORTH_EAST = 0
-NORTH      = Math::PI * 1 / 3
-NORTH_WEST = Math::PI * 2 / 3
-SOUTH_WEST = Math::PI
-SOUTH      = Math::PI * 4 / 3
-SOUTH_EAST = Math::PI * 5 / 3
-CENTER     = :center
-
-ROTATION = Math::PI / 3
-
 brown = '#80461B'
 
 [
