@@ -47,6 +47,20 @@ names = {
   j15: 'Raleigh-Durham',
 }
 
+preplaced_tile = {
+  b13: 'PP-Toronto.1',
+  c8: 'PP-B.2',
+  c26: 'PP-B.1',
+  e22: 'PP-NYC.1',
+  f1: 'PP-F1.4',
+  g18: 'PP-B.2',
+}
+
+cost_location = {
+  c8: { x: 470, y: 225 },
+  e22: { x: 1250, y: 440 }
+}
+
 red_off_boards = {
   a20: {
     exits: [:se, :sw],
@@ -118,6 +132,13 @@ def off_board_exit(left, x_start, x_dir, top, y_start, y_dir)
   }
 end
 
+def load_svg(filename, x, y)
+  File.read("build/#{filename}.svg").gsub("\n", '') .gsub(
+    'svg xmlns="http://www.w3.org/2000/svg"',
+    %{svg xmlns="http://www.w3.org/2000/svg" x="#{x}" y="#{y}"}
+  )
+end
+
 map = %{
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -185,30 +206,6 @@ hexes.each do |row, columns|
         map += off_board_exit(left, WIDTH * 3 / 4, -1, top, HEIGHT * 7 / 8, -1)
       end
     end
-    if river.include?(hex)
-      map += %{
-        <g>
-          <rect x="#{hex_x_middle - 10}" y="#{top + 14}" width="20" height="20" fill="#aaf" stroke="#333" />
-          <text text-anchor="middle" x="#{hex_x_middle}" y="#{top + 30}">10</text>
-        </g>
-      }
-    end
-    if water.include?(hex)
-      map += %{
-        <g>
-          <rect x="#{hex_x_middle - 10}" y="#{top + 14}" width="20" height="20" fill="#88f" stroke="#333" />
-          <text text-anchor="middle" x="#{hex_x_middle}" y="#{top + 30}">20</text>
-        </g>
-      }
-    end
-    if mountain.include?(hex)
-      map += %{
-        <g>
-          <rect x="#{hex_x_middle - 10}" y="#{top + 14}" width="20" height="20" fill="#f86" stroke="#333" />
-          <text text-anchor="middle" x="#{hex_x_middle}" y="#{top + 30}">15</text>
-        </g>
-      }
-    end
     if names[hex] && !red_off_boards[hex]
       map += %{
         <circle
@@ -219,6 +216,39 @@ hexes.each do |row, columns|
           stroke="#000"
           stroke-width="2"
         />
+      }
+    end
+    if preplaced_tile[hex]
+      map += load_svg(preplaced_tile[hex], left, top)
+    end
+    cost_x = hex_x_middle - 10
+    cost_y = top + 14
+    if cost_location[hex]
+      cost_x = cost_location[hex][:x]
+      cost_y = cost_location[hex][:y]
+    end
+    if river.include?(hex)
+      map += %{
+        <g>
+          <rect x="#{cost_x}" y="#{cost_y}" width="20" height="20" fill="#aaf" stroke="#333" />
+          <text text-anchor="middle" x="#{cost_x + 10}" y="#{cost_y + 16}">10</text>
+        </g>
+      }
+    end
+    if water.include?(hex)
+      map += %{
+        <g>
+          <rect x="#{cost_x}" y="#{cost_y}" width="20" height="20" fill="#88f" stroke="#333" />
+          <text text-anchor="middle" x="#{cost_x + 10}" y="#{cost_y + 16}">20</text>
+        </g>
+      }
+    end
+    if mountain.include?(hex)
+      map += %{
+        <g>
+          <rect x="#{cost_x}" y="#{cost_y}" width="20" height="20" fill="#f86" stroke="#333" />
+          <text text-anchor="middle" x="#{cost_x + 10}" y="#{cost_y + 16}">15</text>
+        </g>
       }
     end
   end
