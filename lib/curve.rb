@@ -13,7 +13,7 @@ class Curve
   def to_s
     %{
       <path
-        d="M#{@point1.x} #{@point1.y} A #{@radius} #{@radius} 0 0,#{@direction} #{@point2.x} #{@point2.y}"
+        d="M#{@point1.x.round} #{@point1.y.round} A #{@radius.round} #{@radius.round} 0 0,#{@direction} #{@point2.x.round} #{@point2.y.round}"
         fill="none"
         stroke="#000"
         stroke-width="#{Tile::OFFSET * 7}"

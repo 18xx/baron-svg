@@ -116,6 +116,11 @@ brown = '#80461B'
     { from: NORTH_EAST, to: SOUTH_WEST },
     { from: SOUTH_EAST, to: CENTER },
   ], city: 80, spots: 3, type: 'B', color: :grey },
+  { num: 'PP1', track: [
+    { from: NORTH_WEST, to: SOUTH_WEST },
+    { from: NORTH_WEST, to: WEST },
+    { from: SOUTH_WEST, to: WEST },
+  ], rotations: [3], color: :grey },
 ].each do |values|
   (0...6).each do |dir|
     tile = Tile.new(values[:color])
@@ -124,7 +129,7 @@ brown = '#80461B'
       tile.add TileNumber.new(
         values[:num],
         dir + 1
-      )
+      ) unless values[:num].to_s.start_with?('PP')
 
       values[:track].each do |track_values|
         track = if track_values[:to] == CENTER
