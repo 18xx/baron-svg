@@ -116,11 +116,27 @@ brown = '#80461B'
     { from: NORTH_EAST, to: SOUTH_WEST },
     { from: SOUTH_EAST, to: CENTER },
   ], city: 80, spots: 3, type: 'B', color: :grey },
-  { num: 'PP1', track: [
+  { num: 'PP-F1', track: [
     { from: NORTH_WEST, to: SOUTH_WEST },
     { from: NORTH_WEST, to: WEST },
     { from: SOUTH_WEST, to: WEST },
   ], rotations: [3], color: :grey },
+  { num: 'PP-NYC', track: [
+    { from: SOUTH_WEST, to: WEST, half: true },
+    { from: NORTH_EAST, to: NORTH_WEST, half: true }
+  ], double_o: 40, type: 'NY', rotations: [0], color: :yellow },
+  { num: 'PP-Toronto', track: [
+    { from: WEST, to: EAST },
+    { from: SOUTH_EAST, to: CENTER }
+  ], town: 40, rotations: [0], color: :grey },
+  { num: 'PP-Cleveland', track: [
+    { from: SOUTH_WEST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER }
+  ], city: 0, spots: 2, rotations: [0], color: :grey },
+  { num: 'PP-B', track: [
+    { from: NORTH_EAST, to: CENTER },
+    { from: SOUTH_EAST, to: CENTER }
+  ], city: 30, spots: 1, type: 'B', rotations: (0..1), color: :yellow },
 ].each do |values|
   (0...6).each do |dir|
     tile = Tile.new(values[:color])
@@ -140,6 +156,7 @@ brown = '#80461B'
           Track.new(
             track_values[:from] - (dir * ROTATION),
             track_values[:to] - (dir * ROTATION),
+            track_values[:half]
           )
         end
         tile.add track
@@ -151,6 +168,11 @@ brown = '#80461B'
         values[:spots]
       ) if values[:city]
 
+      tile.add Town.new(
+        Point.new(Tile::WIDTH / 2, Tile::HEIGHT / 2),
+        Point.new(Tile::WIDTH / 2, Tile::HEIGHT / 2)
+      ) if values[:town]
+
       tile.add DoubleOCities.new(
         tile,
         values[:double_o],
@@ -160,6 +182,35 @@ brown = '#80461B'
       tile.add TileType.new(
         values[:type]
       ) if values[:type]
+
+      tile.add(
+        %{
+          <g>
+            <rect x="#{CENTER_X - 30}" y="#{CENTER_Y - 35}" width="20" height="20" fill="yellow" stroke="black" />
+            <text text-anchor="middle" x="#{CENTER_X - 20}" y="#{CENTER_Y - 20}">20</text>
+            <rect x="#{CENTER_X - 10}" y="#{CENTER_Y - 35}" width="20" height="20" fill="green" stroke="black" />
+            <text text-anchor="middle" x="#{CENTER_X}" y="#{CENTER_Y - 20}">30</text>
+            <rect x="#{CENTER_X + 10}" y="#{CENTER_Y - 35}" width="20" height="20" fill="brown" stroke="black" />
+            <text text-anchor="middle" x="#{CENTER_X + 20}" y="#{CENTER_Y - 20}">40</text>
+          </g>
+          <text x="10" y="#{CENTER_Y + 30}">Toronto</text>
+        }
+      ) if values[:num] == 'PP-Toronto'
+
+      tile.add(
+        %{
+          <g>
+            <rect x="#{CENTER_X - 40}" y="#{CENTER_Y - 40}" width="20" height="20" fill="yellow" stroke="black" />
+            <text text-anchor="middle" x="#{CENTER_X - 30}" y="#{CENTER_Y - 25}">30</text>
+            <rect x="#{CENTER_X - 20}" y="#{CENTER_Y - 40}" width="20" height="20" fill="green" stroke="black" />
+            <text text-anchor="middle" x="#{CENTER_X - 10}" y="#{CENTER_Y - 25}">40</text>
+            <rect x="#{CENTER_X}" y="#{CENTER_Y - 40}" width="20" height="20" fill="brown" stroke="black" />
+            <text text-anchor="middle" x="#{CENTER_X + 10}" y="#{CENTER_Y - 25}">50</text>
+            <rect x="#{CENTER_X + 20}" y="#{CENTER_Y - 40}" width="20" height="20" fill="grey" stroke="black" />
+            <text text-anchor="middle" x="#{CENTER_X + 30}" y="#{CENTER_Y - 25}">60</text>
+          </g>
+        }
+      ) if values[:num] == 'PP-Cleveland'
 
       tiles["#{values[:num]}.#{dir + 1}"] = tile
     end

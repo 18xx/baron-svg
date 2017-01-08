@@ -1,10 +1,13 @@
 class Track
-  def initialize(rad1, rad2)
+  attr_reader :half
+
+  def initialize(rad1, rad2, half = false)
     @rad1 = rad1
     @rad2 = rad2
     if rad2 > rad1 && rad2 - rad1 > Math::PI
       @rad1 += Math::PI * 2
     end
+    @half = half || false
   end
 
   def to_s
@@ -18,6 +21,10 @@ class Track
         (@rad1 > @rad2 ? 1 : 0)
       ).to_s
     end
+  end
+
+  def start_point
+    track_points.first
   end
 
   def midpoints(number)
@@ -93,9 +100,13 @@ class Track
     if straight?
       [@rad1, @rad2]
     elsif shallow_curve? && @rad1 < @rad2 || tight_curve? && @rad2 < @rad1
-      [@rad1 + (7 * Math::PI / 6), @rad2 + (5 * Math::PI / 6)]
+      result = [@rad1 + (7 * Math::PI / 6), @rad2 + (5 * Math::PI / 6)]
+      result[0] -= Math::PI / 3 if @half
+      result
     elsif tight_curve? && @rad1 < @rad2 || shallow_curve? && @rad2 < @rad1
-      [@rad1 + (5 * Math::PI / 6), @rad2 + (7 * Math::PI / 6)]
+      result = [@rad1 + (5 * Math::PI / 6), @rad2 + (7 * Math::PI / 6)]
+      result[0] += Math::PI / 3 if @half
+      result
     else
       fail "Unknown radius"
     end

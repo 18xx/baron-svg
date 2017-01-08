@@ -3,15 +3,19 @@ class DoubleOCities < City
     @tile.tile_elements.select do |te|
       te.is_a?(Track)
     end.map do |track|
-      midpoint = track.midpoints(1).first
+      point = if track.half
+        track.start_point
+      else
+        track.midpoints(1).first[:point]
+      end
       if @spots == 2
-        city_circle(midpoint[:point]) +
+        city_circle(point) +
         city_circle(Point.new(
-          midpoint[:point].x + city_radius * 1.75,
-          midpoint[:point].y + city_radius
+          point.x + city_radius * 1.75,
+          point.y + city_radius
         ))
       else
-        city_circle(midpoint[:point])
+        city_circle(point)
       end
     end.join + cities
   end

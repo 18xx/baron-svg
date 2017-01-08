@@ -79,7 +79,7 @@ class City
       city_circle(center)
     end
 
-    result + %{
+    result += %{
       <circle
         cx="#{label_position.x}"
         cy="#{label_position.y}"
@@ -95,7 +95,8 @@ class City
         fill="black"
         font-size="#{Tile::OFFSET * 11}"
       >#{@value}</text>
-    }
+    } if @value > 0
+    "<g>#{result}</g>"
   end
 
   private
